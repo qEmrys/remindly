@@ -1,1 +1,15 @@
-# Reminder
+# Remindly
+
+## Setup
+
+cp .env.example .env
+
+docker-compose up -d
+
+uvicorn app.main:app --reload
+
+## Endpoints
+
+GET /api/health
+POST /api/reminders
+GET /api/reminders
