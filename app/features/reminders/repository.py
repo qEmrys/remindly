@@ -19,3 +19,28 @@ class ReminderRepository:
         result = await self.db.execute(select(Reminder))
         reminders = result.scalars().all()
         return reminders
+    
+    async def get_reminder_by_id(self, reminder_id: int) -> Reminder | None:
+        result = await self.db.execute(select(Reminder).where(Reminder.id == reminder_id))
+        reminder = result.scalars().first()
+        return reminder
+    
+    async def delete_reminder(self, reminder_id: int) -> bool:
+        reminder = await self.get_reminder_by_id(reminder_id)
+        if reminder:
+            await self.db.delete(reminder)
+            await self.db.commit()
+            return True
+        return False
+    
+    async def update_reminder(self, reminder_id: int, text: str | None = None, remind_at: datetime | None = None) -> Reminder | None:
+        reminder = await self.get_reminder_by_id(reminder_id)
+        if reminder:
+            if text is not None:
+                reminder.text = text
+            if remind_at is not None:
+                reminder.remind_at = remind_at
+            await self.db.commit()
+            await self.db.refresh(reminder)
+            return reminder
+        return None
