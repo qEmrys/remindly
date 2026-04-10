@@ -19,3 +19,6 @@ uvicorn app.main:app --reload
 GET /api/health
 POST /api/reminders
 GET /api/reminders
+GET /reminders/{id} 
+PATCH /reminders/{id}
+DELETE /reminders/{id}
