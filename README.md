@@ -6,6 +6,12 @@ cp .env.example .env
 
 docker-compose up -d
 
+## Apply migrations
+
+alembic upgrade head
+
+## Run app
+
 uvicorn app.main:app --reload
 
 ## Endpoints
